@@ -1,3 +1,4 @@
+// eslint-disable-next-line strict
 const store = {
   items: [
     { id: cuid(), name: 'apples', checked: false },
@@ -26,6 +27,9 @@ const generateItemElement = function (item) {
         <button class='shopping-item-delete js-item-delete'>
           <span class='button-label'>delete</span>
         </button>
+        <button class='shopping-item-edit js-item-edit'>
+        <span class='button-label'>edit</span>
+      </button>
       </div>
     </li>`;
 };
@@ -76,6 +80,7 @@ const handleNewItemSubmit = function () {
   });
 };
 
+///START of CHECK / DELETE FUNCTIONS 
 const toggleCheckedForListItem = function (id) {
   const foundItem = store.items.find(item => item.id === id);
   foundItem.checked = !foundItem.checked;
@@ -95,6 +100,8 @@ const getItemIdFromElement = function (item) {
     .data('item-id');
 };
 
+
+//START OF DELETE ITEMS
 /**
  * Responsible for deleting a list item.
  * @param {string} id 
@@ -145,6 +152,39 @@ const handleToggleFilterClick = function () {
   });
 };
 
+
+//START OF EDIT :
+const editListItem = function (item) {
+  let itemTitle = `<span class='shopping-item shopping-item__checked'>${item.name}</span>`;
+  if (!item.checked) {
+    itemTitle = `
+     <span class='shopping-item'>${item.name}</span>
+    `;
+  }
+  return `
+  
+          <span class='button-label'>check</span>
+        </button>
+        <button class='shopping-item-delete js-item-delete'>
+          <span class='button-label'>delete</span>
+        </button>
+        <button class='shopping-item-edit js-item-edit'>
+        <span class='button-label'>edit</span>
+      </button>
+      </div>
+    </li>`;
+};
+
+
+const handleDeleteItemClicked = function () {
+  $('.js-shopping-list').on('click', '.js-item-delete', event => {
+    // Get the index of the item in store.items.
+    const id = getItemIdFromElement(event.currentTarget);
+    // Delete the item.
+    EditListItem(id);
+    render();
+  });
+};
 /**
  * This function will be our callback when the
  * page loads. It is responsible for initially 
@@ -160,6 +200,7 @@ const handleShoppingList = function () {
   handleItemCheckClicked();
   handleDeleteItemClicked();
   handleToggleFilterClick();
+  handleEditItems():
 };
 
 // when the page loads, call `handleShoppingList`
